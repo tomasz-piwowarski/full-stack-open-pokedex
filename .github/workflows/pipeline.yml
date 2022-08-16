@@ -46,6 +46,7 @@ jobs:
                   healthcheck: "https://fullstack-open-part11.herokuapp.com/health"
                   checkstring: "ok"
                   rollbackonhealthcheckfailed: true
+
     tag_release:
         if: ${{ github.event_name == 'push'}}
         needs: [simple_deployment_pipeline]
@@ -53,6 +54,8 @@ jobs:
         steps:
             - name: Bump version and push tag
               uses: anothrNick/github-tag-action@1.36.0
+              with:
+                  fetch-depth: '0'
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   WITH_V: true
